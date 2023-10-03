@@ -25,6 +25,7 @@ print(systems)
 ## Exercise:
 
 FIRECREST_SYSTEM = os.environ.get("FIRECREST_SYSTEM")
+FIRECREST_SYSTEM_WORK_DIR = os.environ.get("FIRECREST_SYSTEM_WORK_DIR")
 
 import json
 
@@ -39,7 +40,7 @@ print(json.dumps(client.all_services(), indent=4))
 
 print("4. List the contents of a directory")
 from pathlib import Path
-work_dir_path = Path("/scratch/snx3000/class414/")
+work_dir_path = Path(FIRECREST_SYSTEM_WORK_DIR)
 print(json.dumps(client.list_files(machine=FIRECREST_SYSTEM, target_path=work_dir_path), indent=4))
 
 print("5. Upload and download \"small\" files")
