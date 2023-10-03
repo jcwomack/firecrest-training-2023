@@ -1,5 +1,6 @@
 import firecrest as f7t
 import os
+import time
 
 
 # Get the values from the env or set them directly in your file
@@ -81,7 +82,33 @@ client.simple_download(
     target_path=target_path,
 )
 
-# 6. Submit a job
+print("6. Submit a job")
+print("7. [Optional] Submit a job and poll until the it is finished")
+job_script_path = Path.cwd() / "examples" / "script.sh"
+job_submit_obj = client.submit(
+    machine=FIRECREST_SYSTEM,
+    job_script=job_script_path,
+    local_file=True
+)
 
+while True:
+    job_queue_obj = client.poll(
+        machine=FIRECREST_SYSTEM,
+        jobs=[job_submit_obj["jobid"]]
+    )[0]
 
-# 7. [Optional] Submit a job and poll until the it is finished
+    print(f"Current state: {job_queue_obj['state']}")
+
+    if job_queue_obj["state"] != "COMPLETED":
+        time.sleep(5)
+        continue
+        
+    break
+    
+output_file_contents = client.view(
+    machine=FIRECREST_SYSTEM,
+    target_path=job_submit_obj["job_file_out"]
+)
+
+print(f"Contents of {job_submit_obj['job_file_out']}:")
+print(output_file_contents)
