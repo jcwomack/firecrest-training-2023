@@ -79,5 +79,4 @@ while True:
 
     break
 
-print("Hello")
 print(json.dumps(tasks_response.json()["task"]["data"], indent=4))
