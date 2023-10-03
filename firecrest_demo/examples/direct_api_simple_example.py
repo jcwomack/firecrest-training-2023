@@ -28,11 +28,11 @@ TOKEN = response.json()["access_token"]
 
 # Uncomment the code below to decode the token
 
-# decoded = jwt.decode(
-#     response.json()["access_token"],
-#     options={"verify_signature": False},
-# )
-# print("\nDecoded token:\n", json.dumps(decoded, indent=4))
+decoded = jwt.decode(
+    response.json()["access_token"],
+    options={"verify_signature": False},
+)
+print("\nDecoded token:\n", json.dumps(decoded, indent=4))
 
 
 # Checking the available systems in our deployment
